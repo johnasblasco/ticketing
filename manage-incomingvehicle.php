@@ -89,14 +89,14 @@ if (strlen($_SESSION['vpmsaid']==0)) {
                  
                     <th>Parking Number</th>
                     <th>Owner Name</th>
-                    <th>Vehicle Reg Number</th>
+                    <th>Vehicle Category</th>
                    
-                          <th>Action</th>
+                          <th class = "text-center">Action</th>
                 </tr>
                                         </tr>
                                         </thead>
                <?php
-$ret=mysqli_query($con,"select *from   tblvehicle where Status=''");
+$ret=mysqli_query($con,"select *from tblvehicle where Status=''");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 ?>
@@ -107,8 +107,8 @@ while ($row=mysqli_fetch_array($ret)) {
                  
                   <td><?php  echo $row['ParkingNumber'];?></td>
                   <td><?php  echo $row['OwnerName'];?></td>
-                  <td><?php  echo $row['RegistrationNumber'];?></td>
-                  <td><a href="view-incomingvehicle-detail.php?viewid=<?php echo $row['ID'];?>">View</a>|<a href="print.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank">Print</a>
+                  <td><?php  echo $row['VehicleCategory'];?></td>
+                  <td><a id = 'parkout' href="view-incomingvehicle-detail.php?viewid=<?php echo $row['ID'];?>"><button type="button" class="btn btn-outline-danger">Park-Out</button></a> | <a href="print.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank"><button type="button" class="btn btn-outline-info">Print</button></a>
                   </td>
                 </tr>
                 <?php 

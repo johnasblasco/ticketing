@@ -113,7 +113,7 @@ echo "<script>alert('Users Added Successfully');</script>";
   									<!-- name -->
   									<div class="row form-group">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="user_name" name="user_name" class="form-control" placeholder="User Name" required="true"></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="user_name" name="user_name" class="form-control" placeholder="Full Name" required="true"></div>
                                     </div>
   									<!-- end -->
 

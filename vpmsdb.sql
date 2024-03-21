@@ -76,7 +76,7 @@ CREATE TABLE `tblvehicle` (
   `ID` int(10) NOT NULL,
   `ParkingNumber` varchar(120) DEFAULT NULL,
   `VehicleCategory` varchar(120) NOT NULL,
-  `VehicleCompanyname` varchar(120) DEFAULT NULL,
+  `VehicleC ompanyname` varchar(120) DEFAULT NULL,
   `RegistrationNumber` varchar(120) DEFAULT NULL,
   `OwnerName` varchar(120) DEFAULT NULL,
   `OwnerContactNumber` bigint(10) DEFAULT NULL,
@@ -159,6 +159,7 @@ after insert on logtable
 FOR each row
 begin
 INSERT INTO logtable VALUES(NEW.ID, NEW.ParkingNumber, NEW.VehicleCategory, NEW.VehicleCompanyname, NEW.RegistrationNumber, NEW.OwnerName, NEW.OwnerContactNumber, NEW.InTime, NEW.OutTime, NEW.ParkingCharge, NEW.Remark, NEW.Status);
+
 end;
 
 --

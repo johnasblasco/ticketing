@@ -83,7 +83,7 @@ return true;
                             </label>
 
                         </div>
-                        <button type="submit" name="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Reset</button>
+                        <button type="submit" name="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Reset</button>
                        
                        
                     </form>

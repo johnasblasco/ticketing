@@ -78,7 +78,7 @@ if (strlen($_SESSION['vpmsaid']==0)) {
                     <div class="card">
                         <div class="card-header">
                         <p style="color:black"><strong class="card-title">DBMS Mini Project - Vehicle Parking Database System</strong><p>
-                        <p>By: Vishwajeeth.P(1JB18CS175) & Y.Goutham Reddy(1JB18CS181)</p>
+                        <p>By: Hihe</p>
                         </div>
                         <div class="card-body">
 <form action="" method="post" enctype="multipart/form-data" class="form-horizontal" name="search">

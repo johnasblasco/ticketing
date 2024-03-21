@@ -43,14 +43,14 @@ if(isset($_POST['submit']))
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 </head>
-<body class="bg-dark">
+<body class="bg-white">
 
     <div class="sufee-login d-flex align-content-center flex-wrap">
         <div class="container">
             <div class="login-content">
                 <div class="login-logo">
                     <a href="index.php">
-                         <h2 style="color: green">Vehicle Parking Management System</h2>
+                         <h2 class = "text-primary">Vehicle Parking Management System</h2>
                     </a>
                 </div>
                 <div class="login-form">
@@ -73,7 +73,7 @@ if(isset($_POST['submit']))
                             </label>
 
                         </div>
-                        <button type="submit" name="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Reset</button>
+                        <button type="submit" name="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Reset</button>
                        
                        
                     </form>

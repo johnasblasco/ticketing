@@ -32,16 +32,12 @@ if(isset($_POST['submit']))
 
   ?>
 <!doctype html>
-
 <html class="no-js" lang="">
-<head>
-   
-    <title>View Vehicle Detail</title>
-   
 
+<head>
+    <title>View Vehicle Detail</title>
     <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
     <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
@@ -50,98 +46,78 @@ if(isset($_POST['submit']))
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
 </head>
+
 <body>
+    <!-- Left Panel --> <?php include_once('includes/sidebar.php');?>
     <!-- Left Panel -->
-
-  <?php include_once('includes/sidebar.php');?>
-
-    <!-- Left Panel -->
-
-    <!-- Right Panel -->
-
-     <?php include_once('includes/header.php');?>
-
-        <div class="breadcrumbs">
-            <div class="breadcrumbs-inner">
-                <div class="row m-0">
-                    <div class="col-sm-4">
-                        <div class="page-header float-left">
-                            <div class="page-title">
-                                <h1>Dashboard</h1>
-                            </div>
+    <!-- Right Panel --> <?php include_once('includes/header.php');?> <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
                         </div>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="page-header float-right">
-                            <div class="page-title">
-                                <ol class="breadcrumb text-right">
-                                    <li><a href="dashboard.php">Dashboard</a></li>
-                                    <li><a href="manage-incomingvehicle.php">View Vehicle</a></li>
-                                    <li class="active">Incoming Vehicle</li>
-                                </ol>
-                            </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li><a href="dashboard.php">Dashboard</a></li>
+                                <li><a href="manage-incomingvehicle.php">View Vehicle</a></li>
+                                <li class="active">Incoming Vehicle</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="content">
-            <div class="animated fadeIn">
-                <div class="row">
-                   
-         
-
+    </div>
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
                             <strong class="card-title">View Incoming Vehicle</strong>
                         </div>
-                        <div class="card-body">
-                  
-              <?php
+                        <div class="card-body"> <?php
  $cid=$_GET['viewid'];
 $ret=mysqli_query($con,"select * from tblvehicle where ID='$cid'");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 
-?>                       <table border="1" class="table table-bordered mg-b-0">
-   
-   <tr>
-                                <th>Parking Number</th>
-                                   <td><?php  echo $row['ParkingNumber'];?></td>
-                                   </tr>                             
-<tr>
-                                <th>Vehicle Category</th>
-                                   <td><?php  echo $row['VehicleCategory'];?></td>
-                                   </tr>
-                                   <tr>
-                                <th>Vehicle Company Name</th>
-                                   <td><?php  echo $packprice= $row['VehicleCompanyname'];?></td>
-                                   </tr>
+?> <table border="1" class="table table-bordered mg-b-0">
                                 <tr>
-                                <th>Registration Number</th>
-                                   <td><?php  echo $row['RegistrationNumber'];?></td>
-                                   </tr>
-                                   <tr>
+                                    <th>Parking Number</th>
+                                    <td><?php  echo $row['ParkingNumber'];?></td>
+                                </tr>
+                                <tr>
+                                    <th>Vehicle Category</th>
+                                    <td><?php  echo $row['VehicleCategory'];?></td>
+                                </tr>
+                                <tr>
+                                    <th>Vehicle Name</th>
+                                    <td><?php  echo $packprice= $row['VehicleCompanyname'];?></td>
+                                </tr>
+                                <tr>
+                                    <th>Plate Number</th>
+                                    <td><?php  echo $row['RegistrationNumber'];?></td>
+                                </tr>
+                                <tr>
                                     <th>Owner Name</th>
-                                      <td><?php  echo $row['OwnerName'];?></td>
-                                  </tr>
-                                      <tr>  
-                                       <th>Owner Contact Number</th>
-                                        <td><?php  echo $row['OwnerContactNumber'];?></td>
-                                    </tr>
-                                    <tr>
-                               <th>In Time</th>
-                                <td><?php  echo $row['InTime'];?></td>
-                            </tr>
-                            <tr>
-    <th>Status</th>
-    <td> <?php  
+                                    <td><?php  echo $row['OwnerName'];?></td>
+                                </tr>
+                                <tr>
+                                    <th>In Time</th>
+                                    <td><?php  echo $row['InTime'];?></td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td> <?php  
 if($row['Status']=="")
 {
   echo "Vehicle In";
@@ -152,94 +128,75 @@ if($row['Status']=="Out")
 }
 
      ;?></td>
-  </tr>
-
-</table>
-
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <table class="table mb-0">
-
-<?php if($row['Status']==""){ ?>
-        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                    <p style="font-size:16px; color:red" align="center"> <?php if($msg){
+                    <table class="table mb-0"> <?php if($row['Status']==""){ ?> <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <p style="font-size:16px; color:red" align="center"> <?php if($msg){
     echo $msg;
   }  ?> </p>
-
-  <tr>
-    <th>Remark :</th>
-    <td>
-    <textarea name="remark" placeholder="" rows="2" cols="4" class="form-control" required="true"></textarea></td>
-  </tr>
- <tr>
-<th>Parking Charge: </th>
-<td>
-   <select name="parkingcharge" class="form-control" required="true" >
-     <option value="Rs.10">Rs.10</option>
-     <option value="RS.20">Rs.20</option>
-     <option value="Rs.35">Rs.35</option>
-   </select></td>
-</tr>
-<tr>
-    <th>Status :</th>
-    <td>
-   <select name="status" class="form-control" required="true" >
-     <option value="Out">Outgoing Vehicle</option>
-   </select></td>
-  </tr>
-                                 
-                                    
-                                    
-                                 <tr>  <p style="text-align: center;"><td> <button type="submit" class="btn btn-primary btn-sm" name="submit" >Update</button></p></td></tr>
-                                </form>
-                            </table>
-<?php } else { ?>
-    <table border="1" class="table table-bordered mg-b-0">
-  <tr>
-    <th>Remark</th>
-    <td><?php echo $row['Remark']; ?></td>
-  </tr>
-<tr>
-   <tr>
-    <th>Parking Fee</th>
-   <td><?php echo $row['ParkingCharge']; ?></td>
-  </tr>
-
-  
-
-<?php } ?>
-</table>
-
-
-  
-
-  
-
-<?php } ?>
+                            <tr>
+                                <th>Remark :</th>
+                                <td>
+                                    <textarea name="remark" placeholder="" rows="2" cols="4" class="form-control" required="true"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Parking Charge: </th>
+                                <td>
+                                    <select name="parkingcharge" class="form-control" required="true">
+                                        <option value="PHP 20.00">PHP 20.00</option>
+                                        <option value="PHP 30.00">PHP 30.00</option>
+                                        <option value="PHP 50.00">PHP 50.00</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Status :</th>
+                                <td>
+                                    <select name="status" class="form-control" required="true">
+                                        <option value="Out">Outgoing Vehicle</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <p style="text-align: center;">
+                                    <td> <button type="submit" class="btn btn-danger btn-sm" name="submit">PARK OUT</button>
+                                </p>
+                                </td>
+                            </tr>
+                        </form>
+                    </table> <?php } else { ?> <table border="1" class="table table-bordered mg-b-0">
+                        <tr>
+                            <th>Remark</th>
+                            <td><?php echo $row['Remark']; ?></td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <th>Parking Fee</th>
+                            <td><?php echo $row['ParkingCharge']; ?></td>
+                        </tr> 
+                        <tr>
+                            <p style="text-align: center;">
+                                <td> <a href="print.php?vid=<?php echo $row['ID'];?>"><button type="submit" class="btn btn-info btn-sm" name="submit">PRINT</button></a>
+                            </p>
+                            </td>
+                        </tr>                     
+                        <?php } ?>
+                    </table> <?php } ?>
+                </div>
             </div>
-
-
-
-        </div>
-    </div><!-- .animated -->
-</div><!-- .content -->
-
-<div class="clearfix"></div>
-
-<?php include_once('includes/footer.php');?>
-
-</div><!-- /#right-panel -->
-
-<!-- Right Panel -->
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-<script src="assets/js/main.js"></script>
-
-
+        </div><!-- .animated -->
+    </div><!-- .content -->
+    <div class="clearfix"></div> <?php include_once('includes/footer.php');?> </div><!-- /#right-panel -->
+    <!-- Right Panel -->
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
-</html>
-<?php }  ?>
+
+</html> <?php }  ?>

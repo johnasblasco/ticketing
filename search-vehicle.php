@@ -85,14 +85,17 @@ if (strlen($_SESSION['vpmsaid']==0)) {
     echo $msg;
   }  ?> </p>
                                    
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Search By Parking Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="searchdata" name="searchdata" class="form-control"  required="required" autofocus="autofocus" ></div>
+                                   <div class="row form-group">
+                                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Search By Parking Number</label></div>
+                                        <div class="col-12 col-md-6"><!-- Adjust the column size as needed -->
+                                            <input type="text" id="searchdata" name="searchdata" class="form-control" required="required" autofocus="autofocus">
+                                        </div>
+                                        <div class="col-12 col-md-1 text-center"><!-- Adjust the column size as needed and add 'text-center' class -->
+                                            <button type="submit" class="btn btn-primary btn-m" name="search">Search</button>
+                                        </div>
                                     </div>
-                                 
-                                    
-                                    
-                                   <p style="text-align: center;"> <button type="submit" class="btn btn-primary btn-sm" name="search" >Search</button></p>
+
+        
                                 </form>
 
  <?php
@@ -118,7 +121,7 @@ $sdata=$_POST['searchdata'];
                                         </tr>
                                         </thead>
                <?php
-$ret=mysqli_query($con,"select *from   tblvehicle where ParkingNumber like '$sdata%'");
+$ret=mysqli_query($con,"select *from   tblvehicle where ParkingNumber like '$sdata%' and status = ''");
 $num=mysqli_num_rows($ret);
 if($num>0){
 $cnt=1;
@@ -134,7 +137,7 @@ while ($row=mysqli_fetch_array($ret)) {
                   <td><?php  echo $row['OwnerName'];?></td>
                   <td><?php  echo $row['RegistrationNumber'];?></td>
                   
-                  <td><a href="view-incomingvehicle-detail.php?viewid=<?php echo $row['ID'];?>">View</a></td>
+                  <td><a href="view-incomingvehicle-detail.php?viewid=<?php echo $row['ID'];?>"><button type="button" class="btn btn-success">View</button></a></td>
                 </tr>
                 <?php 
 $cnt=$cnt+1;

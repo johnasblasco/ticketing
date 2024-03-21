@@ -30,7 +30,10 @@ while ($row=mysqli_fetch_array($ret)) {
           <th colspan="4" style="text-align: center; font-size:22px;"> Vehicle Parking receipt</th>
 
         </tr>
-   
+        <tr>
+          <th >Owner Name</th>
+          <td colspan="3" ><?php  echo $row['OwnerName'];?></td>          
+        </tr>
    <tr>
                                 <th>Parking Number</th>
                                    <td><?php  echo $row['ParkingNumber'];?></td>
@@ -43,16 +46,9 @@ while ($row=mysqli_fetch_array($ret)) {
                                 <th>Vehicle Company Name</th>
                                    <td><?php  echo $packprice= $row['VehicleCompanyname'];?></td>
                              
-                                <th>Registration Number</th>
+                                <th>Plate Number</th>
                                    <td><?php  echo $row['RegistrationNumber'];?></td>
                                    </tr>
-                                   <tr>
-                                    <th>Owner Name</th>
-                                      <td><?php  echo $row['OwnerName'];?></td>
-                                  
-                                       <th>Owner Contact Number</th>
-                                        <td><?php  echo $row['OwnerContactNumber'];?></td>
-                                    </tr>
                                     <tr>
                                <th>In Time</th>
                                 <td><?php  echo $row['InTime'];?></td>
@@ -60,11 +56,11 @@ while ($row=mysqli_fetch_array($ret)) {
     <td> <?php  
 if($row['Status']=="")
 {
-  echo "Incoming Vehicle";
+  echo "Park In Vehicle";
 }
 if($row['Status']=="Out")
 {
-  echo "Outgoing Vehicle";
+  echo "Park Out Vehicle";
 }
 
      ;?></td>
@@ -73,7 +69,7 @@ if($row['Status']=="Out")
 <tr>
 <th>Out time</th>
 <td><?php  echo $row['OutTime'];?></td>
-<th>Rarking Charge</th>
+<th>Parking Charge</th>
 <td><?php  echo $row['ParkingCharge'];?></td>
 </tr>
 <tr>

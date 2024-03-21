@@ -2,34 +2,62 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if (strlen($_SESSION['vpmsaid']==0)) {
-  header('location:logout.php');
-  } else{
 
-if(isset($_POST['submit']))
-  {
-    $parkingnumber=mt_rand(100000000, 999999999);
-    $catename=$_POST['catename'];
-     $vehcomp=$_POST['vehcomp'];
-    $vehreno=$_POST['vehreno'];
-    $ownername=$_POST['ownername'];
-    $ownercontno=$_POST['ownercontno'];
-    $enteringtime=$_POST['enteringtime'];
-    
-     
-    $query=mysqli_query($con, "insert into  tblvehicle(ParkingNumber,VehicleCategory,VehicleCompanyname,RegistrationNumber,OwnerName,OwnerContactNumber) value('$parkingnumber','$catename','$vehcomp','$vehreno','$ownername','$ownercontno')");
-    if ($query) {
-echo "<script>alert('Vehicle Entry Detail has been added');</script>";
-echo "<script>window.location.href ='manage-incomingvehicle.php'</script>";
-  }
-  else
-    {
-     echo "<script>alert('Something Went Wrong. Please try again.');</script>";       
-    }
+    if (strlen($_SESSION['vpmsaid']) == 0) {
+        header('location:logout.php');
+    } 
+    else {
+        if (isset($_POST['submit'])) {
+            $parkingnumber = mt_rand(100000, 999999);
+            $catename = $_POST['catename'];
+            $vehcomp = $_POST['vehcomp'];
+            $vehreno = $_POST['vehreno'];
+            $ownername = $_POST['ownername'];
+            $enteringtime = $_POST['enteringtime'];
+            // Check if a valid category is selected
+            if ($catename != "0") {
+                // Determine which table to insert into based on the category
+                $tableName = '';
+                switch ($catename) {
+                    case 'Four Wheeler Vehicle':
+                        $tableName = 'tblfourwheels';
+                        break;
+                    case 'Three Wheeler Vehicle':
+                        $tableName = 'tblthreewheels';
+                        break;
+                    case 'Two Wheeler Vehicle':
+                        $tableName = 'tbltwowheels';
+                        break;
+                    default:
+                        // Handle invalid category
+                        echo "<script>alert('Invalid vehicle category');</script>";
+                        break;
+                }
+                if (!empty($tableName)) {
+                    echo "<script>console.log('dito pumapasok pa');</script>";
+                    // Insert data into the corresponding table
+                    $query = mysqli_query($con, "INSERT INTO $tableName (ParkingNumber, VehicleCategory, VehicleCompanyname, RegistrationNumber, OwnerName) VALUES ('$parkingnumber', '$catename', '$vehcomp', '$vehreno', '$ownername')");
+                    $query = mysqli_query($con, "INSERT INTO tblvehicle (ParkingNumber, VehicleCategory, VehicleCompanyname, RegistrationNumber, OwnerName) VALUES ('$parkingnumber', '$catename', '$vehcomp', '$vehreno', '$ownername')");
 
-  
-}
-  ?>
+                    if ($query) {
+                        
+                        echo "<script>alert('Vehicle Entry Detail has been added');</script>";
+                        echo "<script>window.location.href ='manage-incomingvehicle.php'</script>";
+                    } else {
+                        echo "<script>console.log('may mali gago');</script>";
+                        echo "<script>alert('Something Went Wrong. Please try again. Error: " . mysqli_error($con) . "');</script>";
+                    }
+                    echo "<script>console.log('tingin nga');</script>";
+                }
+            } else {
+                // Alert the user to select a category
+                echo "<script>alert('Please select a category');</script>";
+            }
+        
+        }
+
+?>
+
 <!doctype html>
 <html class="no-js" lang="">
 <head>
@@ -127,26 +155,20 @@ echo "<script>window.location.href ='manage-incomingvehicle.php'</script>";
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Vehicle Company</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="vehcomp" name="vehcomp" class="form-control" placeholder="Vehicle Company" required="true"></div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Vehicle Name</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="vehcomp" name="vehcomp" class="form-control" placeholder="Vehicle Name" required="true"></div>
                                     </div>
                                  
                                      <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Registration Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="vehreno" name="vehreno" class="form-control" placeholder="Registration Number" required="true"></div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plate Number</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" id="vehreno" name="vehreno" class="form-control" placeholder="Plate Number" required="true"></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Owner Name</label></div>
                                         <div class="col-12 col-md-9"><input type="text" id="ownername" name="ownername" class="form-control" placeholder="Owner Name" required="true"></div>
-                                    </div>
-                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Owner Contact Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="ownercontno" name="ownercontno" class="form-control" placeholder="Owner Contact Number" required="true" maxlength="10" pattern="[0-9]+"></div>
-                                    </div>
-                                   
+                                    </div>                             
                                     
-                                    
-                                   <p style="text-align: center;"> <button type="submit" class="btn btn-primary btn-sm" name="submit" >Add</button></p>
+                                   <p style="text-align: center;"> <button type="submit" class="btn btn-primary btn-sm" name="submit" >PARK IN</button></p>
                                 </form>
                             </div>
                             
