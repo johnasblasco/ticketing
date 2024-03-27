@@ -84,13 +84,16 @@ if(isset($_POST['submit']))
                         <div class="card-header">
                             <strong class="card-title">View Incoming Vehicle</strong>
                         </div>
-                        <div class="card-body"> <?php
- $cid=$_GET['viewid'];
-$ret=mysqli_query($con,"select * from tblvehicle where ID='$cid'");
-$cnt=1;
-while ($row=mysqli_fetch_array($ret)) {
+                        <div class="card-body"> 
+                        <?php
 
-?> <table border="1" class="table table-bordered mg-b-0">
+
+                        $cid=$_GET['viewid'];
+                        $ret=mysqli_query($con,"select * from tblvehicle where ID='$cid'");
+                        $cnt=1;
+                        while ($row=mysqli_fetch_array($ret)) {
+
+                        ?> <table border="1" class="table table-bordered mg-b-0">
                                 <tr>
                                     <th>Parking Number</th>
                                     <td><?php  echo $row['ParkingNumber'];?></td>
@@ -139,7 +142,7 @@ if($row['Status']=="Out")
                             <tr>
                                 <th>Remark :</th>
                                 <td>
-                                    <textarea name="remark" placeholder="" rows="2" cols="4" class="form-control" required="true"></textarea>
+                                    <textarea name="remark" placeholder="" rows="2" cols="4" class="form-control"></textarea>
                                 </td>
                             </tr>
                             <tr>

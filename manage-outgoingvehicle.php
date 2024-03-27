@@ -111,7 +111,7 @@ while ($row=mysqli_fetch_array($ret)) {
                   <td><?php  echo $row['RegistrationNumber'];?></td>
                   
                   <td><a href="view-outgoingvehicle-detail.php?viewid=<?php echo $row['ID'];?>"><button type="button" class="btn btn-success">View</button></a> | 
-<a href="Tprint.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank"><button type="button" class="btn btn-outline-info">Print</button></a>
+<a href="print.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank"><button type="button" class="btn btn-outline-info">Print</button></a>
                   </td>
                 </tr>
                 <?php 

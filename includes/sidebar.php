@@ -11,6 +11,7 @@
                     <li>
                         <a href="add-vehicle.php"> <i class="menu-icon fas fa-car"></i>Park In Vehicle </a>
                     </li>
+                    
                     <li>
                         <a href="search-vehicle.php"> <i class="menu-icon fas fa-car"></i>Park Out Vehicle </a>
                     </li>

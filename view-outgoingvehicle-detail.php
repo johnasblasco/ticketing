@@ -109,10 +109,6 @@ while ($row=mysqli_fetch_array($ret)) {
                                     <th>Owner Name</th>
                                       <td><?php  echo $row['OwnerName'];?></td>
                                   </tr>
-                                      <tr>  
-                                       <th>Owner Contact Number</th>
-                                        <td><?php  echo $row['OwnerContactNumber'];?></td>
-                                    </tr>
                                     <tr>
                                <th>In Time</th>
                                 <td><?php  echo $row['InTime'];?></td>
