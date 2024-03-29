@@ -54,13 +54,7 @@ if (strlen($_SESSION['vpmsaid']) == 0) {
                   <th>Vehicle Category</th>
                   <td><?php echo $row['VehicleCategory']; ?></td>
               </tr>
-              <tr>
-                  <th>Vehicle Company Name</th>
-                  <td><?php echo $packprice = $row['VehicleCompanyname']; ?></td>
 
-                  <th>Plate Number</th>
-                  <td><?php echo $row['RegistrationNumber']; ?></td>
-              </tr>
               <tr>
                   <th>In Time</th>
                   <td><?php echo date("H:i:s", strtotime($row['InTime'])); ?></td>

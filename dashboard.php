@@ -69,7 +69,12 @@ if (strlen($_SESSION['vpmsaid']==0)) {
         #cellPaiChart{
             height: 160px;
         }
-
+        .mainDashboard img{
+            height: 200px;
+        }
+        .card .card-body{
+            height: 150px;
+        }
     </style>
 </head>
 
@@ -96,22 +101,30 @@ if (strlen($_SESSION['vpmsaid']==0)) {
             </div>
 
             <div class="row justify-content-center mb-5">
-                <div class="col-lg-4 col-md-6">
-                    <img src="images/car.png" class="img-thumbnail" alt="img-thumbnail">
-                    <p id="carCount" class="text-center">2/50</p>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <img src="images/tricycle.png" class="img-thumbnail" alt="img-thumbnail">
-                    <p id="tricycleCount" class="text-center">0/50</p>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <img src="images/motorcycle.png" class="img-thumbnail" alt="img-thumbnail">
-                    <p id="motorcycleCount" class="text-center">0/50</p>
-                </div>
+
+            <!-- Modify The Links -->
+            <div class="col-lg-4 col-md-6">
+                <img src="images/motor.png" class="img-thumbnail" alt="img-thumbnail">
+                <p id="carCount" class="text-center">2/50</p>
+                <a href="add-vehicle.php?category=Two%20Wheeler%20Vehicle"><button type="button" class="btn btn-primary">ADD</button></a>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img src="images/kotse.jpg" class="img-thumbnail" alt="img-thumbnail">
+                <p id="tricycleCount" class="text-center">0/50</p>
+                <a href="add-vehicle.php?category=Four%20Wheeler%20Vehicle"><button type="button" class="btn btn-primary">ADD</button></a>
+
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img src="images/tricycle.jpg" class="img-thumbnail" alt="img-thumbnail">
+                <p id="motorcycleCount" class="text-center">0/50</p>
+                <a href="add-vehicle.php?category=Three%20Wheeler%20Vehicle"><button type="button" class="btn btn-primary">ADD</button></a>
+            </div>
+            <!-- /Modify The Links -->
+
             </div>
 
         </div>
-
+        
 
                     <?php
 //todays Vehicle Entries

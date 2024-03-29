@@ -7,13 +7,16 @@ include('includes/dbconnection.php');
         header('location:logout.php');
     } 
     else {
+        // !RETRIEVE THE LINKS
+        $selectedCategory = $_GET['category'] ?? '';
+        //  !RETRIEVE THE LINKS
+
         if (isset($_POST['submit'])) {
             $parkingnumber = mt_rand(100000, 999999);
             $catename = $_POST['catename'];
-            $vehcomp = $_POST['vehcomp'];
-            $vehreno = $_POST['vehreno'];
             $ownername = $_POST['ownername'];
             $enteringtime = $_POST['enteringtime'];
+    
             // Check if a valid category is selected
             if ($catename != "0") {
                 // Determine which table to insert into based on the category
@@ -36,8 +39,8 @@ include('includes/dbconnection.php');
                 if (!empty($tableName)) {
                     echo "<script>console.log('dito pumapasok pa');</script>";
                     // Insert data into the corresponding table
-                    $query = mysqli_query($con, "INSERT INTO $tableName (ParkingNumber, VehicleCategory, VehicleCompanyname, RegistrationNumber, OwnerName) VALUES ('$parkingnumber', '$catename', '$vehcomp', '$vehreno', '$ownername')");
-                    $query = mysqli_query($con, "INSERT INTO tblvehicle (ParkingNumber, VehicleCategory, VehicleCompanyname, RegistrationNumber, OwnerName) VALUES ('$parkingnumber', '$catename', '$vehcomp', '$vehreno', '$ownername')");
+                    $query = mysqli_query($con, "INSERT INTO $tableName (ParkingNumber, VehicleCategory, OwnerName) VALUES ('$parkingnumber', '$catename', '$ownername')");
+                    $query = mysqli_query($con, "INSERT INTO tblvehicle (ParkingNumber, VehicleCategory, OwnerName) VALUES ('$parkingnumber', '$catename', '$ownername')");
 
                     if ($query) {
                         
@@ -78,7 +81,6 @@ include('includes/dbconnection.php');
     <link rel="stylesheet" href="assets/css/style.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 
 </head>
@@ -143,25 +145,21 @@ include('includes/dbconnection.php');
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="select" class=" form-control-label">Select</label></div>
                                         <div class="col-12 col-md-9">
+
+                                            <!-- SELECT THE LINKS -->
                                             <select name="catename" id="catename" class="form-control">
                                                 <option value="0">Select Category</option>
-                                                <?php $query=mysqli_query($con,"select * from tblcategory");
-              while($row=mysqli_fetch_array($query))
-              {
-              ?>    
-                                                 <option value="<?php echo $row['VehicleCat'];?>"><?php echo $row['VehicleCat'];?></option>
-                  <?php } ?> 
+                                                <?php
+                                                $query = mysqli_query($con, "select * from tblcategory");
+                                                while ($row = mysqli_fetch_array($query)) {
+                                                    $selected = ($row['VehicleCat'] == $selectedCategory) ? 'selected' : '';
+                                                ?>    
+                                                    <option value="<?php echo $row['VehicleCat']; ?>" <?php echo $selected; ?>><?php echo $row['VehicleCat']; ?></option>
+                                                <?php } ?> 
                                             </select>
+                                            <!-- /SELECT THE LINKS -->
+
                                         </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Vehicle Name</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="vehcomp" name="vehcomp" class="form-control" placeholder="Vehicle Name" required="true"></div>
-                                    </div>
-                                 
-                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plate Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" id="vehreno" name="vehreno" class="form-control" placeholder="Plate Number" required="true"></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Owner Name</label></div>
