@@ -2,35 +2,53 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if (strlen($_SESSION['vpmsaid']==0)) {
-  header('location:logout.php');
-  } else{
 
-if(isset($_POST['submit']))
-  {
-    
-    $cid=$_GET['viewid'];
-      $remark=$_POST['remark'];
-      $status=$_POST['status'];
-      $parkingcharge=$_POST['parkingcharge'];
-     
- 
-    
-     
-   $query=mysqli_query($con, "update  tblvehicle set Remark='$remark',Status='$status',ParkingCharge='$parkingcharge' where ID='$cid'");
-    if ($query) {
-    $msg="All remarks has been updated.";
-  }
-  else
-    {
-      $msg="Something Went Wrong. Please try again";
+if (strlen($_SESSION['vpmsaid']) == 0) {
+    header('location:logout.php');
+} else {
+    if(isset($_POST['submit'])) {
+        $cid = $_GET['viewid'];
+        $remark = $_POST['remark'];
+        $status = $_POST['status'];
+        $parkingcharge = $_POST['parkingcharge'];
+
+        $tables = ['tblthreewheels', 'tblfourwheels', 'tbltwowheels'];
+        $success = false;
+
+        foreach ($tables as $table) {
+            $query = mysqli_query($con, "UPDATE $table SET Remark='$remark', Status='$status', ParkingCharge='$parkingcharge' WHERE ID='$cid'");
+            if ($query) {
+                $success = true;
+            }
+        }
+
+        if ($success) {
+            $msg = "All remarks have been updated.";
+            $btn = "<button type='submit' class='btn btn-info btn-sm' name='submit'>PRINT</button>";
+        } else {
+            $msg = "Something Went Wrong. Please try again.";
+            $btn = "";
+        }
     }
 
-  
-} 
+    $cid = $_GET['viewid'];
+    $tables = ['tblthreewheels', 'tblfourwheels', 'tbltwowheels'];
+    $row = null;
+
+    foreach ($tables as $table) {
+        $query = mysqli_query($con, "SELECT * FROM $table WHERE ID='$cid'");
+        if ($query && mysqli_num_rows($query) > 0) {
+            $row = mysqli_fetch_array($query);
+            break;
+        }
+    }
 
 
-  ?>
+if (!$row) {
+    echo "Vehicle details not found.";
+} else {
+?>
+
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -86,120 +104,106 @@ if(isset($_POST['submit']))
                         </div>
                         <div class="card-body"> 
                         <?php
+                            if ($row) {
+                                ?>
+                                 <table border="1" class="table table-bordered mg-b-0">
+                                    <tr>
+                                        <th>Parking Number</th>
+                                        <td><?php  echo $row['ParkingNumber'];?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Vehicle Category</th>
+                                        <td><?php  echo $row['VehicleCategory'];?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Owner Name</th>
+                                        <td><?php  echo $row['OwnerName'];?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>In Time</th>
+                                        <td><?php  echo $row['InTime'];?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td><?php echo ($row['Status'] == "") ? "Vehicle In" : "Vehicle out"; ?></td>
+                                    </tr>
+                                </table>
+                                <?php
+                                if ($row['Status'] == "") {
+                                ?>
+                                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                        <p style="font-size:16px; color:red" align="center"><?php echo isset($msg) ? $msg : ''; ?></p>
+                                        <table class="table mb-0">
+                                            <tr>
+                                                <th>Remark :</th>
+                                                <td><textarea name="remark" placeholder="" rows="2" cols="4" class="form-control"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Parking Charge: </th>
+                                                <td>
+                                                    <select name="parkingcharge" class="form-control" required="true">
+                                                        <option value="PHP 20.00">PHP 20.00</option>
+                                                        <option value="PHP 30.00">PHP 30.00</option>
+                                                        <option value="PHP 50.00">PHP 50.00</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Status :</th>
+                                                <td>
+                                                    <select name="status" class="form-control" required="true">
+                                                        <option value="Out">Outgoing Vehicle</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="text-align: center;">
+                                                    <button type="submit" class="btn btn-danger btn-sm" name="submit">PARK OUT</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                <?php
+                                } else {
+                                ?>
+                                    <table border="1" class="table table-bordered mg-b-0">
+                                        <tr>
+                                            <th>Remark</th>
+                                            <td><?php echo $row['Remark']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Parking Fee</th>
+                                            <td><?php echo $row['ParkingCharge']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align: center;">
+                                                <a href="print.php?vid=<?php echo $row['ID']; ?>"><button type="submit" class="btn btn-info btn-sm" name="submit">PRINT</button></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                <?php
+                                 echo "<p>". print_r($_GET['viewid']) . "</p>";
 
-
-                        $cid=$_GET['viewid'];
-                        $ret=mysqli_query($con,"select * from tblvehicle where ID='$cid'");
-                        $cnt=1;
-                        while ($row=mysqli_fetch_array($ret)) {
-
-                        ?> <table border="1" class="table table-bordered mg-b-0">
-                                <tr>
-                                    <th>Parking Number</th>
-                                    <td><?php  echo $row['ParkingNumber'];?></td>
-                                </tr>
-                                <tr>
-                                    <th>Vehicle Category</th>
-                                    <td><?php  echo $row['VehicleCategory'];?></td>
-                                </tr>
-                                <tr>
-                                    <th>Vehicle Name</th>
-                                    <td><?php  echo $packprice= $row['VehicleCompanyname'];?></td>
-                                </tr>
-                                <tr>
-                                    <th>Plate Number</th>
-                                    <td><?php  echo $row['RegistrationNumber'];?></td>
-                                </tr>
-                                <tr>
-                                    <th>Owner Name</th>
-                                    <td><?php  echo $row['OwnerName'];?></td>
-                                </tr>
-                                <tr>
-                                    <th>In Time</th>
-                                    <td><?php  echo $row['InTime'];?></td>
-                                </tr>
-                                <tr>
-                                    <th>Status</th>
-                                    <td> <?php  
-if($row['Status']=="")
-{
-  echo "Vehicle In";
-}
-if($row['Status']=="Out")
-{
-  echo "Vehicle out";
-}
-
-     ;?></td>
-                                </tr>
-                            </table>
+                                }
+                            }
+                        }
+                        ?>
                         </div>
                     </div>
-                    <table class="table mb-0"> <?php if($row['Status']==""){ ?> <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            <p style="font-size:16px; color:red" align="center"> <?php if($msg){
-    echo $msg;
-  }  ?> </p>
-                            <tr>
-                                <th>Remark :</th>
-                                <td>
-                                    <textarea name="remark" placeholder="" rows="2" cols="4" class="form-control"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Parking Charge: </th>
-                                <td>
-                                    <select name="parkingcharge" class="form-control" required="true">
-                                        <option value="PHP 20.00">PHP 20.00</option>
-                                        <option value="PHP 30.00">PHP 30.00</option>
-                                        <option value="PHP 50.00">PHP 50.00</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Status :</th>
-                                <td>
-                                    <select name="status" class="form-control" required="true">
-                                        <option value="Out">Outgoing Vehicle</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <p style="text-align: center;">
-                                    <td> <button type="submit" class="btn btn-danger btn-sm" name="submit">PARK OUT</button>
-                                </p>
-                                </td>
-                            </tr>
-                        </form>
-                    </table> <?php } else { ?> <table border="1" class="table table-bordered mg-b-0">
-                        <tr>
-                            <th>Remark</th>
-                            <td><?php echo $row['Remark']; ?></td>
-                        </tr>
-                        <tr>
-                        <tr>
-                            <th>Parking Fee</th>
-                            <td><?php echo $row['ParkingCharge']; ?></td>
-                        </tr> 
-                        <tr>
-                            <p style="text-align: center;">
-                                <td> <a href="print.php?vid=<?php echo $row['ID'];?>"><button type="submit" class="btn btn-info btn-sm" name="submit">PRINT</button></a>
-                            </p>
-                            </td>
-                        </tr>                     
-                        <?php } ?>
-                    </table> <?php } ?>
                 </div>
             </div>
         </div><!-- .animated -->
     </div><!-- .content -->
-    <div class="clearfix"></div> <?php include_once('includes/footer.php');?> </div><!-- /#right-panel -->
-    <!-- Right Panel -->
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <div class="clearfix"></div>
+    <?php include_once('includes/footer.php'); ?>
+    
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
-</body>
-
-</html> <?php }  ?>
+</html>
+<?php } ?>

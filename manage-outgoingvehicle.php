@@ -96,27 +96,48 @@ if (strlen($_SESSION['vpmsaid']==0)) {
                                         </tr>
                                         </thead>
                <?php
-$ret=mysqli_query($con,"select *from   tblvehicle where Status='Out'");
-$cnt=1;
-while ($row=mysqli_fetch_array($ret)) {
+                    $ret1=mysqli_query($con,"SELECT * FROM tbltwowheels WHERE Status='Out'");
+                    $ret2=mysqli_query($con,"SELECT * FROM tblthreewheels WHERE Status='Out'");
+                    $ret3=mysqli_query($con,"SELECT * FROM tblfourwheels WHERE Status='Out'");
 
+                    $cnt = 1;
+
+                    // Fetch data from tbltwowheels
+                    while ($row=mysqli_fetch_array($ret1)) {
+                        echo "<tr>";
+                        echo "<td>".$cnt."</td>";
+                        echo "<td>".$row['ParkingNumber']."</td>";
+                        echo "<td>".$row['OwnerName']."</td>";
+                        echo "<td>".$row['RegistrationNumber']."</td>";
+                        echo "<td><a href='view-outgoingvehicle-detail.php?viewid=".$row['ID']."'><button type='button' class='btn btn-success'>View</button></a> | <a href='print.php?vid=".$row['ID']."' style='cursor:pointer' target='_blank'><button type='button' class='btn btn-outline-info'>Print</button></a></td>";
+                        echo "</tr>";
+                        $cnt++;
+                    }
+
+                    // Fetch data from tblthreewheels
+                    while ($row=mysqli_fetch_array($ret2)) {
+                        echo "<tr>";
+                        echo "<td>".$cnt."</td>";
+                        echo "<td>".$row['ParkingNumber']."</td>";
+                        echo "<td>".$row['OwnerName']."</td>";
+                        echo "<td>".$row['RegistrationNumber']."</td>";
+                        echo "<td><a href='view-outgoingvehicle-detail.php?viewid=".$row['ID']."'><button type='button' class='btn btn-success'>View</button></a> | <a href='print.php?vid=".$row['ID']."' style='cursor:pointer' target='_blank'><button type='button' class='btn btn-outline-info'>Print</button></a></td>";
+                        echo "</tr>";
+                        $cnt++;
+                    }
+
+                    // Fetch data from tblfourwheels
+                    while ($row=mysqli_fetch_array($ret3)) {
+                        echo "<tr>";
+                        echo "<td>".$cnt."</td>";
+                        echo "<td>".$row['ParkingNumber']."</td>";
+                        echo "<td>".$row['OwnerName']."</td>";
+                        echo "<td>".$row['RegistrationNumber']."</td>";
+                        echo "<td><a href='view-outgoingvehicle-detail.php?viewid=".$row['ID']."'><button type='button' class='btn btn-success'>View</button></a> | <a href='print.php?vid=".$row['ID']."' style='cursor:pointer' target='_blank'><button type='button' class='btn btn-outline-info'>Print</button></a></td>";
+                        echo "</tr>";
+                        $cnt++;
+                    }
 ?>
-              
-                <tr>
-                  <td><?php echo $cnt;?></td>
-            
-                 
-                  <td><?php  echo $row['ParkingNumber'];?></td>
-                  <td><?php  echo $row['OwnerName'];?></td>
-                  <td><?php  echo $row['RegistrationNumber'];?></td>
-                  
-                  <td><a href="view-outgoingvehicle-detail.php?viewid=<?php echo $row['ID'];?>"><button type="button" class="btn btn-success">View</button></a> | 
-<a href="print.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank"><button type="button" class="btn btn-outline-info">Print</button></a>
-                  </td>
-                </tr>
-                <?php 
-$cnt=$cnt+1;
-}?>
               </table>
 
                     </div>

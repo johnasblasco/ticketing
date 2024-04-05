@@ -8,13 +8,7 @@
                         <a href="dashboard.php"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                     </li>
                    
-                    <li>
-                        <a href="add-vehicle.php"> <i class="menu-icon fas fa-car"></i>Park In Vehicle </a>
-                    </li>
                     
-                    <li>
-                        <a href="search-vehicle.php"> <i class="menu-icon fas fa-car"></i>Park Out Vehicle </a>
-                    </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Manage Vehicle</a>
                         <ul class="sub-menu children dropdown-menu">
@@ -24,6 +18,14 @@
                         </li>
 
                         </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="add-vehicle.php"> <i class="menu-icon fas fa-car"></i>Park In Vehicle </a>
+                    </li>
+                    
+                    <li>
+                        <a href="search-vehicle.php"> <i class="menu-icon fas fa-car"></i>Park Out Vehicle </a>
                     </li>
 
                     <li class="menu-item-has-children dropdown">

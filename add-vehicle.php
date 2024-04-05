@@ -40,8 +40,6 @@ include('includes/dbconnection.php');
                     echo "<script>console.log('dito pumapasok pa');</script>";
                     // Insert data into the corresponding table
                     $query = mysqli_query($con, "INSERT INTO $tableName (ParkingNumber, VehicleCategory, OwnerName) VALUES ('$parkingnumber', '$catename', '$ownername')");
-                    $query = mysqli_query($con, "INSERT INTO tblvehicle (ParkingNumber, VehicleCategory, OwnerName) VALUES ('$parkingnumber', '$catename', '$ownername')");
-
                     if ($query) {
                         
                         echo "<script>alert('Vehicle Entry Detail has been added');</script>";

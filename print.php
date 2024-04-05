@@ -18,12 +18,20 @@ if (strlen($_SESSION['vpmsaid']) == 0) {
 
   <?php
   $cid = $_GET['vid'];
-  $ret = mysqli_query($con, "select * from tblvehicle where ID='$cid'");
-  $cnt = 1;
-  while ($row = mysqli_fetch_array($ret)) {
+  $tables = ['tblthreewheels', 'tblfourwheels', 'tbltwowheels'];
+  $row = null;
+
+  foreach ($tables as $table) {
+      $query = mysqli_query($con, "SELECT * FROM $table WHERE ID='$cid'");
+      if ($query && mysqli_num_rows($query) > 0) {
+          $row = mysqli_fetch_array($query);
+          break;
+      }
+  }
+
+  if ($row) {
       $timeIn = strtotime($row['InTime']);
       $timeOut = strtotime($row['OutTime']);
-    
 
       // Check if both timeIn and timeOut are valid timestamps
       if ($timeIn !== false && $timeOut !== false) {
@@ -35,12 +43,11 @@ if (strlen($_SESSION['vpmsaid']) == 0) {
           // You can also handle this case by displaying an error message to the user
       }
       ?>
-      <div id="exampl">
+      <div id="example">
 
           <table border="1" class="table table-bordered mg-b-0">
               <tr>
                   <th colspan="4" style="text-align: center; font-size:22px;"> Vehicle Parking receipt</th>
-
               </tr>
               <tr>
                   <th>Owner Name</th>
@@ -49,25 +56,14 @@ if (strlen($_SESSION['vpmsaid']) == 0) {
               <tr>
                   <th>Parking Number</th>
                   <td><?php echo $row['ParkingNumber']; ?></td>
-
-
                   <th>Vehicle Category</th>
                   <td><?php echo $row['VehicleCategory']; ?></td>
               </tr>
-
               <tr>
                   <th>In Time</th>
                   <td><?php echo date("H:i:s", strtotime($row['InTime'])); ?></td>
                   <th>Status</th>
-                  <td> <?php
-                      if ($row['Status'] == "") {
-                          echo "Park In Vehicle";
-                      }
-                      if ($row['Status'] == "Out") {
-                          echo "Park Out Vehicle";
-                      }
-
-                      ; ?></td>
+                  <td><?php echo ($row['Status'] == "") ? "Park In Vehicle" : "Park Out Vehicle"; ?></td>
               </tr>
               <?php if ($row['Status'] == "Out") { ?>
                   <tr>
@@ -76,40 +72,31 @@ if (strlen($_SESSION['vpmsaid']) == 0) {
                       <th>Parking Charge</th>
                       <td><?php echo $row['ParkingCharge']; ?></td>
                   </tr>
-
               <?php } ?>
-              <?php
-                if ($timeOut != 0) {
-                    echo "
-                    <tr>
-                        <th>Total Minutes</th>
-                        <td colspan='3'>" . floor($totalMinutes) . " Minutes</td>
-                    </tr>
-                    <tr>
-                        <th>Remark</th>
-                        <td colspan='3'>" . $row['Remark'] . "</td>
-                    </tr>
-                    ";
-                }
-                ?>
-
-
-
-                  <!-- print -->
+              <?php if ($timeOut != 0) { ?>
+                  <tr>
+                      <th>Total Minutes</th>
+                      <td colspan="3"><?php echo floor($totalMinutes); ?> Minutes</td>
+                  </tr>
+                  <tr>
+                      <th>Remark</th>
+                      <td colspan="3"><?php echo $row['Remark']; ?></td>
+                  </tr>
+              <?php } ?>
+              <!-- Print button -->
               <tr>
-                  <td colspan="4" style="text-align:center; cursor:pointer"><i class="fa fa-print fa-2x"
-                                                                              aria-hidden="true"
-                                                                              OnClick="CallPrint(this.value)"></i>
-                  </td>
+                  <td colspan="4" style="text-align:center; cursor:pointer"><i class="fa fa-print fa-2x" aria-hidden="true" OnClick="CallPrint()"></i></td>
               </tr>
-              
-
           </table>
-  <?php } ?>
       </div>
+  <?php } else {
+      // If no data found
+      echo "Vehicle details not found.";
+  } ?>
+
       <script>
-          function CallPrint(strid) {
-              var prtContent = document.getElementById("exampl");
+          function CallPrint() {
+              var prtContent = document.getElementById("example");
               var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
               WinPrint.document.write(prtContent.innerHTML);
               WinPrint.document.close();

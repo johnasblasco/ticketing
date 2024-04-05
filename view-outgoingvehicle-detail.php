@@ -82,10 +82,10 @@ if (strlen($_SESSION['vpmsaid']==0)) {
                         <div class="card-body">
                   
               <?php
- $cid=$_GET['viewid'];
-$ret=mysqli_query($con,"select * from tblvehicle where ID='$cid'");
-$cnt=1;
-while ($row=mysqli_fetch_array($ret)) {
+                $cid=$_GET['viewid'];
+                $ret=mysqli_query($con,"select * from tblvehicle where ID='$cid'");
+                $cnt=1;
+                while ($row=mysqli_fetch_array($ret)) {
 
 ?>                       <table border="1" class="table table-bordered mg-b-0">
    

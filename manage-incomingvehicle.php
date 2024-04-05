@@ -79,32 +79,83 @@ if (strlen($_SESSION['vpmsaid']) == 0) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $ret = mysqli_query($con, "SELECT * FROM tblvehicle WHERE Status=''");
+                                        $queryFourWheels = mysqli_query($con, "SELECT * FROM tblfourwheels WHERE Status=''");
+                                        $queryThreeWheels = mysqli_query($con, "SELECT * FROM tblthreewheels WHERE Status=''");
+                                        $queryTwoWheels = mysqli_query($con, "SELECT * FROM tbltwowheels WHERE Status=''");
+                                        
+                                        function calculateTotalMinutes($inTime) {
+                                            $timeIn = strtotime($inTime);
+                                            $timeOut = time();
+                                            return ($timeOut - $timeIn) / 60;
+                                        }
+
                                         $cnt = 1;
-                                        while ($row = mysqli_fetch_array($ret)) {
-                                            // Calculate total minutes
-                                            $timeIn = strtotime($row['InTime']);
-                                            $timeOut = time(); // Current time
-                                            $totalMinutes = ($timeOut - $timeIn) / 60;
+                                        while ($row = mysqli_fetch_array($queryFourWheels)) {
+                                            $totalMinutes = calculateTotalMinutes($row['InTime']);
                                             ?>
                                             <tr>
                                                 <td><?php echo $cnt;?></td>
                                                 <td><?php echo $row['ParkingNumber'];?></td>
                                                 <td><?php echo $row['OwnerName'];?></td>
-                                                <td><?php echo $row['VehicleCategory'];?></td>
+                                                <td>Four Wheeler</td>
                                                 <td><?php echo floor($totalMinutes) . " Minutes";?></td>
                                                 <td>
                                                     <a id='parkout' href="view-incomingvehicle-detail.php?viewid=<?php echo $row['ID'];?>">
                                                         <button type="button" class="btn btn-outline-danger">Park-Out</button>
                                                     </a>
-                                                    
                                                     <a href="print.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank">
                                                         <button type="button" class="btn btn-outline-info">Print</button>
                                                     </a>
                                                 </td>
                                             </tr>
                                             <?php 
-                                            $cnt = $cnt + 1;
+                                            $cnt++;
+                                        }
+
+                                        // Display data from tblthreewheels
+                                        while ($row = mysqli_fetch_array($queryThreeWheels)) {
+                                            $totalMinutes = calculateTotalMinutes($row['InTime']);
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $cnt;?></td>
+                                                <td><?php echo $row['ParkingNumber'];?></td>
+                                                <td><?php echo $row['OwnerName'];?></td>
+                                                <td>Three Wheeler</td>
+                                                <td><?php echo floor($totalMinutes) . " Minutes";?></td>
+                                                <td>
+                                                    <a id='parkout' href="view-incomingvehicle-detail.php?viewid=<?php echo $row['ID'];?>">
+                                                        <button type="button" class="btn btn-outline-danger">Park-Out</button>
+                                                    </a>
+                                                    <a href="print.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank">
+                                                        <button type="button" class="btn btn-outline-info">Print</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php 
+                                            $cnt++;
+                                        }
+
+                                        // Display data from tbltwowheels
+                                        while ($row = mysqli_fetch_array($queryTwoWheels)) {
+                                            $totalMinutes = calculateTotalMinutes($row['InTime']);
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $cnt;?></td>
+                                                <td><?php echo $row['ParkingNumber'];?></td>
+                                                <td><?php echo $row['OwnerName'];?></td>
+                                                <td>Two Wheeler</td>
+                                                <td><?php echo floor($totalMinutes) . " Minutes";?></td>
+                                                <td>
+                                                    <a id='parkout' href="view-incomingvehicle-detail.php?viewid=<?php echo $row['ID'];?>">
+                                                        <button type="button" class="btn btn-outline-danger">Park-Out</button>
+                                                    </a>
+                                                    <a href="print.php?vid=<?php echo $row['ID'];?>" style="cursor:pointer" target="_blank">
+                                                        <button type="button" class="btn btn-outline-info">Print</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php 
+                                            $cnt++;
                                         }
                                         ?>
                                     </tbody>

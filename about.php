@@ -92,9 +92,8 @@ if (strlen($_SESSION['vpmsaid']==0)) {
 <p style="color:black">The objective of this project is to build a Vehicle Parking Database system that enables the time management and control of vehicles using number plate recognition. The system that will track the entry and exit of cars, maintain a listing of cars within the parking lot, and determine if the parking lot is full or not.</p>
                                 </label></div>
                             
-                        
-                                      
-                                   
+                
+                                
                                 </form>
 
  
